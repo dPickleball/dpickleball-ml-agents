@@ -19,3 +19,17 @@ class CustomDataChannel(SideChannel):
         msg.write_int32(p1)
         msg.write_int32(p2)
         self.queue_message_to_send(msg)
+
+# Quit channel
+class StringSideChannel(SideChannel):
+    def __init__(self):
+        super().__init__(UUID("e4d8d14a-66b3-4d58-9a3b-b3c32a6fd11b"))
+
+    def on_message_received(self, msg: IncomingMessage) -> None:
+        # This can be left empty unless Unity sends something back
+        pass
+
+    def send_quit(self):
+        msg = OutgoingMessage()
+        msg.write_string("shutdown")
+        self.queue_message_to_send(msg)
